@@ -345,10 +345,16 @@ function render(d){
 function renderServicio(url){
   var el = document.getElementById("servicio-content");
   if(!el) return;
-  if(!url || url === "—" || url.trim() === ""){
-    el.innerHTML = '<div style="padding:30px;color:#7090b8;font-size:12px"><div style="font-size:36px;margin-bottom:10px">📋</div>Sin hoja de servicio registrada.<br>El tecnico debe subir la foto al sistema.</div>';
+  if(!url || url === "\u2014" || url.trim() === ""){
+    el.innerHTML = "<div style='padding:30px;color:#7090b8;font-size:12px'><div style='font-size:36px;margin-bottom:10px'>📋</div>Sin hoja de servicio registrada.</div>";
   } else {
-    el.innerHTML = '<img src="'+url+'" alt="Hoja de Servicio" style="width:100%;border-radius:10px;border:1px solid #e4ecfb;box-shadow:0 2px 12px rgba(26,53,88,.1)" onerror="this.parentNode.innerHTML='<div style=&quot;padding:20px;color:#ef4444;font-size:12px&quot;>No se pudo cargar la imagen.</div>'"/>';
+    var img = document.createElement("img");
+    img.src = url;
+    img.alt = "Hoja de Servicio";
+    img.style.cssText = "width:100%;border-radius:10px;border:1px solid #e4ecfb;box-shadow:0 2px 12px rgba(26,53,88,.1)";
+    img.onerror = function(){ el.innerHTML = "<div style='padding:20px;color:#ef4444;font-size:12px'>No se pudo cargar la imagen.</div>"; };
+    el.innerHTML = "";
+    el.appendChild(img);
   }
 }
 
