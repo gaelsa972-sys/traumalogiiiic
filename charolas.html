@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charola · Traumalogic</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#F3F7FC;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#1E3A6E}
+#root{max-width:480px;margin:0 auto;padding-bottom:28px}
+.row{display:flex;align-items:center}.sb{justify-content:space-between}
+.hd{background:#1E3A6E;padding:18px 18px 46px;display:flex;flex-direction:column;gap:14px}
+.logo{background:#fff;border-radius:10px;padding:5px 10px;display:flex;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}.logo img{height:36px;display:block}
+.pill{background:#2A8FD6;color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;padding:4px 10px;border-radius:12px;text-transform:uppercase}
+.kick{color:#AFC6E4;font-size:13px}h1{color:#fff;font-size:26px;margin:0;line-height:1.15}.sub{color:#D6E6F7;font-size:15px}
+.bar{height:4px;background:#2A8FD6;margin-top:-4px}
+.card{background:#fff;border:1px solid #D5E2F1;border-radius:12px}
+.st{margin:-36px 16px 0;padding:14px 16px;display:flex;flex-direction:column;gap:10px;position:relative}
+.badge{font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:14px;font-weight:600}small{display:block;color:#5B7394;font-size:12px;font-weight:400}
+.stats{display:flex;gap:10px;padding:14px 16px 0}.stats .card{flex:1;text-align:center;padding:10px 0}.stats strong{font-size:22px;display:block}
+h2{font-size:16px;margin:20px 16px 10px}
+.fotos{display:flex;gap:10px;padding:0 16px}.fotos figure{flex:1;margin:0}.fotos img{width:100%;height:230px;object-fit:cover;border-radius:12px;display:block;background:#E6EEF7}figcaption{font-size:12px;color:#5B7394;margin-top:6px}
+.list{margin:0 16px}.it{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #E6EEF7;font-size:14px}.it:last-child{border-bottom:none}
+.it input{width:20px;height:20px;accent-color:#1E3A6E;margin:0;flex:none}.it em{color:#5B7394;font-size:12px;font-style:normal}
+.q{min-width:32px;height:24px;padding:0 6px;border-radius:12px;background:#1E3A6E;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}.q2{background:#2A8FD6}
+.muted{color:#5B7394;font-size:12px}p.muted{margin:8px 16px 0}.cnt{margin:20px 16px 10px 0}
+.hist{margin:0 16px;font-size:13px}.hr{display:grid;grid-template-columns:1.1fr 1fr 1fr;padding:10px 14px;border-bottom:1px solid #E6EEF7}.hr:last-child{border-bottom:none}.th{color:#5B7394;font-size:12px;font-weight:600}
+.btns{display:flex;flex-direction:column;gap:10px;padding:22px 16px 0}
+button.b1,button.b2{height:50px;border-radius:12px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}.b1{background:#1E3A6E;color:#fff;border:none}.b2{background:#fff;color:#1E3A6E;border:1.5px solid #1E3A6E}
+.form{margin:14px 16px 0;padding:14px 16px;display:flex;flex-direction:column;gap:10px}.form label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:600}
+.form input,.form textarea{min-height:44px;border:1px solid #C9D9EC;border-radius:10px;padding:10px;font:inherit;font-size:16px;color:#1E3A6E}
+.msg{font-size:13px;margin:0}.err{color:#A32D2D}.ok{color:#1C6B3C}
+.edit{background:#E3F4EA;color:#1C6B3C;font-size:12px;font-weight:700;padding:6px 16px;text-align:center}
+footer{text-align:center;font-size:12px;color:#5B7394;padding:22px 16px 0}
+.center{padding:80px 24px;text-align:center;color:#5B7394}
+.ov{position:fixed;inset:0;background:rgba(10,20,40,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}.ov.open{display:flex}
+.box{background:#fff;border-radius:16px;padding:22px;width:100%;max-width:320px;display:flex;flex-direction:column;gap:12px;text-align:center}
+.box input{height:46px;border:1px solid #C9D9EC;border-radius:10px;text-align:center;font:inherit;font-size:16px;letter-spacing:2px}
+:focus-visible{outline:3px solid #2A8FD6;outline-offset:2px}
+</style>
+</head>
+<body>
+<main id="root"><div class="center">Cargando charola…</div></main>
+
+<div class="ov" id="pwdOv" role="dialog" aria-modal="true" aria-labelledby="pwdT">
+  <div class="box">
+    <b id="pwdT">Acceso almacén</b>
+    <span class="muted">Contraseña para registrar esterilizaciones</span>
+    <input id="pwdIn" type="password" autocomplete="off" aria-label="Contraseña">
+    <p class="msg err" id="pwdErr"></p>
+    <div class="row" style="gap:8px"><button class="b2" id="pwdNo" style="flex:1">Cancelar</button><button class="b1" id="pwdOk" style="flex:1">Entrar</button></div>
+  </div>
+</div>
+
+<script>
+{
+// ▼▼ Pega aquí la URL de tu Apps Script (termina en /exec) ▼▼
+const API = 'https://script.google.com/macros/s/AKfycbzwRgqA1vfaQ37nI6l6wN8V6bskI0iYs1XfrOc40N1RWdtWGm5qiUNmMpmVtmTl6W1F0g/exec';
+// ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+const root = document.getElementById('root');
+const id = (new URLSearchParams(location.search).get('id') || '').trim().toUpperCase();
+let D = null, pwd = null, checked = {}, panel = null;
+
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = d => { if (!d) return '—'; const p = String(d).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : d; };
+const img = u => /^https:\/\//.test(u) || /^img\/[\w.\-]+$/.test(u) ? u : '';
+const api = q => fetch(API + '?' + new URLSearchParams(q)).then(r => r.json());
+
+function status() {
+  const L = D.historial[0];
+  if (!L) return { t: 'Sin registro', bg: '#EEF1F5', fg: '#4A5A70' };
+  const t = new Date(); t.setHours(0, 0, 0, 0);
+  return new Date(L.caduca + 'T00:00:00') >= t ? { t: 'Vigente', bg: '#E3F4EA', fg: '#1C6B3C' } : { t: 'Vencida', bg: '#FCE8E8', fg: '#A32D2D' };
+}
+
+function render() {
+  const c = D.charola, L = D.historial[0] || {}, st = status(), items = D.contenido;
+  const done = Object.values(checked).filter(Boolean).length;
+  const f1 = img(c.foto1), f2 = img(c.foto2);
+  let h = '';
+  if (pwd) h += '<div class="edit">Modo almacén activo</div>';
+  h += `<header class="hd"><div class="row sb"><button class="logo" id="logo" aria-label="Traumalogic"><img src="img/traumalogic-logo.png" alt="Traumalogic S.A. de C.V."></button><span class="pill">${esc(c.familia)}</span></div>
+  <div><div class="kick">Charola</div><h1>${esc(c.nombre)}</h1><div class="sub">${esc(c.id)}${c.marca ? ' · ' + esc(c.marca) : ''}</div></div></header><div class="bar"></div>`;
+  h += `<section class="card st"><div class="row sb"><b>Esterilización</b><span class="badge" style="background:${st.bg};color:${st.fg}">${st.t}</span></div>
+  <div class="grid2"><div><small>Última</small>${fmt(L.fecha)}</div><div><small>Caduca</small>${fmt(L.caduca)}</div><div><small>Lote / ciclo</small>${esc(L.lote || '—')}</div><div><small>Armó</small>${esc(L.armo || '—')}</div></div></section>`;
+  h += `<div class="stats"><div class="card"><strong>${esc(c.piezas || '—')}</strong><small>piezas</small></div><div class="card"><strong>${esc(c.niveles || '—')}</strong><small>niveles</small></div><div class="card"><strong>${esc(c.peso || '—')}</strong><small>peso ref.</small></div></div>`;
+  if (f1 || f2) {
+    h += '<h2>Fotos de referencia</h2><div class="fotos">';
+    if (f1) h += `<figure><img src="${esc(f1)}" alt="Foto de la charola 1" loading="lazy"><figcaption>Foto 1</figcaption></figure>`;
+    if (f2) h += `<figure><img src="${esc(f2)}" alt="Foto de la charola 2" loading="lazy"><figcaption>Foto 2</figcaption></figure>`;
+    h += '</div>';
+  }
+  if (items.length) {
+    h += `<div class="row sb"><h2>Contenido</h2><span class="muted cnt">${done} / ${items.length} revisados</span></div><div class="card list">`;
+    items.forEach((it, i) => {
+      const eq = /equipo|cable/i.test(it.tipo);
+      h += `<label class="it"><input type="checkbox" data-i="${i}"${checked[i] ? ' checked' : ''}><span class="q${eq ? ' q2' : ''}">${esc(it.cantidad)}</span><span>${esc(it.pieza)}${it.nota ? ' <em>' + esc(it.nota) + '</em>' : ''}</span></label>`;
+    });
+    h += '</div><p class="muted">Azul marino: instrumental · Azul claro: equipo y cables. La palomita es solo para revisar, no se guarda.</p>';
+  }
+  h += '<h2>Historial de esterilización</h2><div class="card hist"><div class="hr th"><span>Fecha</span><span>Lote</span><span>Armó</span></div>';
+  if (!D.historial.length) h += '<div class="hr"><span class="muted" style="grid-column:1/-1">Aún no hay registros</span></div>';
+  D.historial.slice(0, 10).forEach(r => { h += `<div class="hr"><span>${fmt(r.fecha)}</span><span>${esc(r.lote)}</span><span>${esc(r.armo)}</span></div>`; });
+  h += '</div><div class="btns"><button class="b1" id="rep">Reportar faltante o daño</button>';
+  if (pwd) h += '<button class="b2" id="reg">Registrar esterilización</button>';
+  h += '</div>';
+  if (panel === 'rep') h += `<form class="card form" id="fRep"><b>Reporte de faltante o daño</b><label>¿Qué falta o qué está dañado?<textarea name="detalle" rows="3" maxlength="300"></textarea></label><label>Tu nombre (opcional)<input name="quien" maxlength="40"></label><p class="msg" id="mRep" role="status"></p><div class="row" style="gap:8px"><button type="button" class="b2 cancel" style="flex:1">Cancelar</button><button type="submit" class="b1" style="flex:1">Enviar</button></div></form>`;
+  if (panel === 'reg') h += `<form class="card form" id="fReg"><b>Nueva esterilización</b><label>Fecha<input type="date" name="fecha"></label><label>Caduca<input type="date" name="caduca"></label><label>Lote / ciclo<input name="lote" maxlength="40"></label><label>Armó<input name="armo" maxlength="40"></label><p class="msg" id="mReg" role="status"></p><div class="row" style="gap:8px"><button type="button" class="b2 cancel" style="flex:1">Cancelar</button><button type="submit" class="b1" style="flex:1">Guardar</button></div></form>`;
+  h += `<footer>Traumalogic S.A. de C.V. · ${esc(c.id)}</footer>`;
+  root.innerHTML = h;
+  bind();
+}
+
+let taps = 0, tapT = null;
+function bind() {
+  root.querySelectorAll('input[type=checkbox]').forEach(x => x.addEventListener('change', () => { checked[x.dataset.i] = x.checked; render(); }));
+  document.getElementById('logo').onclick = () => {
+    taps++; clearTimeout(tapT);
+    if (taps >= 3) { taps = 0; openPwd(); } else tapT = setTimeout(() => taps = 0, 1000);
+  };
+  document.getElementById('rep').onclick = () => { panel = 'rep'; render(); document.getElementById('fRep').scrollIntoView({ behavior: 'smooth' }); };
+  const reg = document.getElementById('reg');
+  if (reg) reg.onclick = () => { panel = 'reg'; render(); const f = document.getElementById('fReg'); f.fecha.value = new Date().toISOString().slice(0, 10); f.scrollIntoView({ behavior: 'smooth' }); };
+  root.querySelectorAll('.cancel').forEach(b => b.onclick = () => { panel = null; render(); });
+  const fRep = document.getElementById('fRep');
+  if (fRep) fRep.onsubmit = e => {
+    e.preventDefault(); const m = document.getElementById('mRep'); m.className = 'msg';
+    if (!fRep.detalle.value.trim()) { m.className = 'msg err'; m.textContent = 'Escribe qué falta o qué está dañado.'; return; }
+    m.textContent = 'Enviando…';
+    api({ action: 'reportar', id, detalle: fRep.detalle.value, quien: fRep.quien.value }).then(r => {
+      if (r.ok) { m.className = 'msg ok'; m.textContent = 'Reporte enviado. Gracias.'; fRep.reset(); }
+      else { m.className = 'msg err'; m.textContent = r.error || 'No se pudo enviar.'; }
+    }).catch(() => { m.className = 'msg err'; m.textContent = 'Sin conexión. Intenta de nuevo.'; });
+  };
+  const fReg = document.getElementById('fReg');
+  if (fReg) fReg.onsubmit = e => {
+    e.preventDefault(); const m = document.getElementById('mReg'); m.className = 'msg err';
+    const v = { fecha: fReg.fecha.value, caduca: fReg.caduca.value, lote: fReg.lote.value.trim(), armo: fReg.armo.value.trim() };
+    if (!v.fecha || !v.caduca || !v.lote || !v.armo) { m.textContent = 'Llena todos los campos.'; return; }
+    if (v.caduca < v.fecha) { m.textContent = 'La caducidad no puede ser antes de la fecha.'; return; }
+    m.className = 'msg'; m.textContent = 'Guardando…';
+    api(Object.assign({ action: 'registrar', id, pwd }, v)).then(r => {
+      if (r.ok) { panel = null; load(); }
+      else { m.className = 'msg err'; m.textContent = r.error || 'No se pudo guardar.'; if (/contrase/i.test(r.error || '')) { pwd = null; } }
+    }).catch(() => { m.className = 'msg err'; m.textContent = 'Sin conexión. Intenta de nuevo.'; });
+  };
+}
+
+const ov = document.getElementById('pwdOv'), pIn = document.getElementById('pwdIn'), pErr = document.getElementById('pwdErr');
+function openPwd() { pIn.value = ''; pErr.textContent = ''; ov.classList.add('open'); setTimeout(() => pIn.focus(), 100); }
+function tryPwd() { if (!pIn.value) { pErr.textContent = 'Escribe la contraseña.'; return; } pwd = pIn.value; ov.classList.remove('open'); render(); }
+document.getElementById('pwdOk').onclick = tryPwd;
+document.getElementById('pwdNo').onclick = () => ov.classList.remove('open');
+pIn.addEventListener('keydown', e => { if (e.key === 'Enter') tryPwd(); });
+
+function load() {
+  if (!id) { root.innerHTML = '<div class="center">Este QR no trae el código de la charola.</div>'; return; }
+  api({ action: 'get', id }).then(r => {
+    if (!r.ok) { root.innerHTML = '<div class="center">' + esc(r.error || 'No se encontró la charola') + '</div>'; return; }
+    D = r; document.title = r.charola.nombre + ' · Traumalogic'; render();
+  }).catch(() => { root.innerHTML = '<div class="center">No se pudo cargar. Revisa tu conexión.</div>'; });
+}
+load();
+}
+</script>
+</body>
+</html>
